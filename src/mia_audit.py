@@ -390,7 +390,7 @@ class MembershipInferenceAudit:
                 target_model.eval()
                 ground_truth = self.dataset.train_mask.long()[target_node_index]
                 self.save_model(
-                    path=f'{config.modeldir}/{config.dataset}-{config.model}/target-model-{str(config.frac_target_nodes).replace(".", "")}-{i_audit}.pth',
+                    path=f'{config.modeldir}/{config.dataset}-{config.model}/target-model-{str(config.frac_target_nodes).replace(".", "")}-{config.optimizer}-{i_audit}.pth',
                     model=target_model,
                     train_mask=self.dataset.train_mask,
                     target_node_index=target_node_index,

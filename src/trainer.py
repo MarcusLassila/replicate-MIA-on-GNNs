@@ -56,7 +56,10 @@ def train_gnn(model, dataset, config: TrainConfig, disable_tqdm=False, inductive
     num_val_node = dataset.val_mask.sum().item()
     if config.early_stopping and num_val_node == 0:
         raise Exception('Early stopping not possible without a validation set!')
-    optimizer = config.optimizer(model.parameters(), lr=config.lr, weight_decay=config.weight_decay)
+    if config.optimizer.__name__ == 'SGD':
+        optimizer = config.optimizer(model.parameters(), lr=config.lr, weight_decay=config.weight_decay, momentum=0.9)
+    else:
+        optimizer = config.optimizer(model.parameters(), lr=config.lr, weight_decay=config.weight_decay)
     loss_fn, criterion = config.loss_fn, config.criterion
     res = defaultdict(list)
     early_stopping_counter = 0
